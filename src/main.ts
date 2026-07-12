@@ -6,10 +6,12 @@ import './styles/base.css';
 import './styles/components.css';
 import './styles/print.css';
 
+import { computeLoan } from './engine/loan';
 import { encodeState, decodeState } from './engine/url-state';
 import { initState } from './state';
 import { renderGuilloche } from './ui/guilloche';
 import { bindInputs } from './ui/inputs';
+import { initStickyResult, renderResults } from './ui/results';
 import { initTheme } from './ui/theme';
 
 const guilloche = document.querySelector<SVGElement>('#guilloche');
@@ -30,6 +32,12 @@ const themeToggle = document.querySelector<HTMLButtonElement>('#theme-toggle');
 if (themeToggle) {
   initTheme(themeToggle);
 }
+
+initStickyResult();
+
+store.subscribe((inputs, status) => {
+  renderResults(inputs, status, computeLoan(inputs));
+});
 
 // Keep the URL shareable: reflect inputs into the query string, debounced.
 let urlTimer: ReturnType<typeof setTimeout> | undefined;
