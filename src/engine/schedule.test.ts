@@ -51,6 +51,32 @@ describe('buildSchedule', () => {
     expect(s.monthlyBalances).toEqual([0]);
   });
 
+  it('produces one month row per payment', () => {
+    const s = buildSchedule(p, m, i, n);
+    expect(s.months).toHaveLength(n);
+    expect(s.months[0]?.month).toBe(1);
+    expect(s.months[n - 1]?.month).toBe(n);
+    expect(s.months[n - 1]?.closingBalance).toBe(0);
+  });
+
+  it('month rows sum to the yearly rollup', () => {
+    const n18 = 18;
+    const p18 = maxPrincipal(m, i, n18);
+    const s = buildSchedule(p18, m, i, n18);
+    const firstYearPrincipal = s.months
+      .slice(0, 12)
+      .reduce((acc, row) => acc + row.principalPaid, 0);
+    const firstYearInterest = s.months.slice(0, 12).reduce((acc, row) => acc + row.interestPaid, 0);
+    expect(firstYearPrincipal).toBeCloseTo(s.years[0]?.principalPaid ?? -1, 6);
+    expect(firstYearInterest).toBeCloseTo(s.years[0]?.interestPaid ?? -1, 6);
+  });
+
+  it('first month interest equals balance times rate', () => {
+    const s = buildSchedule(p, m, i, n);
+    expect(s.months[0]?.interestPaid).toBeCloseTo(p * i, 6);
+    expect(s.months[0]?.principalPaid).toBeCloseTo(m - p * i, 6);
+  });
+
   it('later years pay more principal than earlier years (reducing balance)', () => {
     const n60 = 60;
     const p60 = maxPrincipal(m, i, n60);

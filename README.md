@@ -30,7 +30,8 @@ leaves your machine.
 - **Rate stress test** — shows what a 2% rate rise does to your maximum, since most
   Sri Lankan loans float with AWPLR
 - **Balance decay chart** — SVG area chart of the remaining balance, with hover tooltip
-- **Year-by-year amortization table** — principal paid, interest paid, remaining balance
+- **Amortization table** — yearly or month-by-month view (payments in Sri Lanka are
+  monthly), with principal paid, interest paid, and remaining balance
 - **Shareable URLs** — inputs live in the query string; "Copy link" and "Copy summary"
   (plain text, ready for WhatsApp or email)
 - **Print-ready** — a clean one-page summary via your browser's print dialog

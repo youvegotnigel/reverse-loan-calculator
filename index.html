@@ -271,11 +271,24 @@
 
             <details class="schedule" id="schedule" hidden>
               <summary>Year-by-year breakdown</summary>
+              <div class="schedule-controls chips" role="group" aria-label="Breakdown granularity">
+                <button type="button" class="chip view-chip" data-view="yearly" aria-pressed="true">
+                  Yearly
+                </button>
+                <button
+                  type="button"
+                  class="chip view-chip"
+                  data-view="monthly"
+                  aria-pressed="false"
+                >
+                  Monthly
+                </button>
+              </div>
               <div class="table-wrap">
                 <table>
                   <thead>
                     <tr>
-                      <th scope="col">Year</th>
+                      <th scope="col">Period</th>
                       <th scope="col">Principal paid</th>
                       <th scope="col">Interest paid</th>
                       <th scope="col">Remaining balance</th>

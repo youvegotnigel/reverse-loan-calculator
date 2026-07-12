@@ -757,3 +757,19 @@ input[type='range']:focus-visible::-moz-range-thumb {
   pointer-events: none;
   box-shadow: 0 2px 8px rgb(0 0 0 / 0.3);
 }
+
+.schedule-controls {
+  padding: 0 var(--space-4) var(--space-3);
+}
+
+.table-wrap.is-monthly {
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.table-wrap.is-monthly thead th {
+  position: sticky;
+  top: 0;
+  background: var(--surface-0);
+  z-index: 1;
+}

@@ -14,7 +14,7 @@ import { renderChart } from './ui/chart';
 import { renderGuilloche } from './ui/guilloche';
 import { bindInputs } from './ui/inputs';
 import { initStickyResult, renderResults } from './ui/results';
-import { renderScheduleTable } from './ui/schedule-table';
+import { initScheduleToggle, renderScheduleTable } from './ui/schedule-table';
 import { initShare } from './ui/share';
 import { initTheme } from './ui/theme';
 
@@ -61,8 +61,12 @@ store.subscribe((inputs, status) => {
     result.totalPayments,
   );
   renderChart(chartSvg, schedule.monthlyBalances);
-  renderScheduleTable(scheduleBody, schedule.years);
+  renderScheduleTable(scheduleBody, schedule);
 });
+
+if (scheduleBody) {
+  initScheduleToggle(scheduleBody);
+}
 
 // Keep the URL shareable: reflect inputs into the query string, debounced.
 let urlTimer: ReturnType<typeof setTimeout> | undefined;

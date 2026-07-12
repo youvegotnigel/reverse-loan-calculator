@@ -5,8 +5,16 @@ export interface YearRow {
   closingBalance: number;
 }
 
+export interface MonthRow {
+  month: number;
+  principalPaid: number;
+  interestPaid: number;
+  closingBalance: number;
+}
+
 export interface Schedule {
   years: YearRow[];
+  months: MonthRow[];
   /** Balance after each payment; length n + 1, from principal down to 0. */
   monthlyBalances: number[];
 }
@@ -23,8 +31,9 @@ export function buildSchedule(
 ): Schedule {
   const monthlyBalances: number[] = [principal];
   const years: YearRow[] = [];
+  const months: MonthRow[] = [];
   if (n <= 0 || principal <= 0) {
-    return { years, monthlyBalances: [0] };
+    return { years, months, monthlyBalances: [0] };
   }
 
   let balance = principal;
@@ -41,6 +50,12 @@ export function buildSchedule(
     yearPrincipal += principalPart;
     yearInterest += interest;
     monthlyBalances.push(balance);
+    months.push({
+      month,
+      principalPaid: principalPart,
+      interestPaid: interest,
+      closingBalance: balance,
+    });
 
     if (month % 12 === 0 || month === n) {
       years.push({
@@ -54,5 +69,5 @@ export function buildSchedule(
     }
   }
 
-  return { years, monthlyBalances };
+  return { years, months, monthlyBalances };
 }
