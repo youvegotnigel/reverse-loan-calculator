@@ -7,18 +7,18 @@
   "engines": {
     "node": ">=22"
   },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
+    "dev": "npm run dev -w @rlc/web",
+    "build": "npm run build -w @rlc/web",
+    "preview": "npm run preview -w @rlc/web",
     "test": "vitest run --passWithNoTests",
     "test:watch": "vitest",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write ."
-  },
-  "dependencies": {
-    "@fontsource-variable/fraunces": "^5.2.0",
-    "@fontsource-variable/inter": "^5.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
@@ -27,7 +27,6 @@
     "prettier": "^3.5.0",
     "typescript": "~5.8.0",
     "typescript-eslint": "^8.0.0",
-    "vite": "^6.0.0",
     "vitest": "^3.0.0"
   }
 }

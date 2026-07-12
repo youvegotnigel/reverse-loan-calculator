@@ -1,5 +1,5 @@
-import { type AppInputs } from './engine/property';
-import { statusFor, type InputStatus } from './engine/validate';
+import { type AppInputs } from '@rlc/engine';
+import { statusFor, type InputStatus } from '@rlc/engine';
 
 export type Listener = (inputs: AppInputs, status: InputStatus) => void;
 

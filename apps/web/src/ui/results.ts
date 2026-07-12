@@ -1,7 +1,7 @@
-import { amountInWords, formatLKR, formatPercent } from '../engine/format';
-import { stressTest, type LoanResult } from '../engine/loan';
-import { propertyAffordability, type AppInputs } from '../engine/property';
-import { LIMITS, type InputStatus } from '../engine/validate';
+import { amountInWords, formatLKR, formatPercent } from '@rlc/engine';
+import { stressTest, type LoanResult } from '@rlc/engine';
+import { propertyAffordability, type AppInputs } from '@rlc/engine';
+import { LIMITS, type InputStatus } from '@rlc/engine';
 
 const STRESS_BUMP = 2;
 
