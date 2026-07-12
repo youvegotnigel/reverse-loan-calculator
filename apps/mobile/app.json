@@ -31,6 +31,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6422abe1-bfee-4f29-8cbe-2ee614a49311"
+      }
+    },
+    "owner": "youvegotnigel"
   }
 }
