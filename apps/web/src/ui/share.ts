@@ -1,7 +1,7 @@
-import { amountInWords, formatLKR, formatPercent } from '../engine/format';
-import { computeLoan } from '../engine/loan';
-import { propertyAffordability } from '../engine/property';
-import { statusFor } from '../engine/validate';
+import { amountInWords, formatLKR, formatPercent } from '@rlc/engine';
+import { computeLoan } from '@rlc/engine';
+import { propertyAffordability } from '@rlc/engine';
+import { statusFor } from '@rlc/engine';
 import { type Store } from '../state';
 
 function flash(button: HTMLButtonElement, message: string): void {

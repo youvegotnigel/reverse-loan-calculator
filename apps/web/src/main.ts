@@ -6,9 +6,9 @@ import './styles/base.css';
 import './styles/components.css';
 import './styles/print.css';
 
-import { computeLoan } from './engine/loan';
-import { buildSchedule } from './engine/schedule';
-import { encodeState, decodeState } from './engine/url-state';
+import { computeLoan } from '@rlc/engine';
+import { buildSchedule } from '@rlc/engine';
+import { encodeState, decodeState } from '@rlc/engine';
 import { initState } from './state';
 import { renderChart } from './ui/chart';
 import { renderGuilloche } from './ui/guilloche';

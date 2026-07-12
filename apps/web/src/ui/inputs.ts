@@ -1,5 +1,5 @@
-import { type AppInputs } from '../engine/property';
-import { clampField, type LimitField } from '../engine/validate';
+import { type AppInputs } from '@rlc/engine';
+import { clampField, type LimitField } from '@rlc/engine';
 import { type Store } from '../state';
 
 const grouping = new Intl.NumberFormat('en-LK', { maximumFractionDigits: 0 });

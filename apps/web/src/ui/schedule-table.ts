@@ -1,5 +1,5 @@
-import { formatLKR } from '../engine/format';
-import { type Schedule } from '../engine/schedule';
+import { formatLKR } from '@rlc/engine';
+import { type Schedule } from '@rlc/engine';
 
 type View = 'yearly' | 'monthly';
 

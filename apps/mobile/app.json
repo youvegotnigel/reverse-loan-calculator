@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "Reverse Loan Calculator",
+    "slug": "reverse-loan-calculator",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "backgroundColor": "#0A2E2C",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0A2E2C"
+    },
+    "ios": {
+      "bundleIdentifier": "lk.youvegotnigel.reverseloan",
+      "supportsTablet": true,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "lk.youvegotnigel.reverseloan",
+      "adaptiveIcon": {
+        "backgroundColor": "#0A2E2C",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
