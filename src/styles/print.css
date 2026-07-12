@@ -1,0 +1,66 @@
+@media print {
+  .site-header,
+  .theme-toggle,
+  .note-actions,
+  .sticky-result,
+  .chips,
+  .hint,
+  input[type='range'] {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .card,
+  .stat,
+  .chart-wrap,
+  .schedule {
+    box-shadow: none;
+    border: 1px solid #bbb;
+  }
+
+  .note-plate {
+    background: #fff;
+    color: #000;
+    box-shadow: none;
+    border: 2px solid #000;
+  }
+
+  .note-plate::before,
+  .note-plate::after {
+    border-color: #999;
+  }
+
+  .note-figure {
+    color: #000;
+  }
+
+  .note-label,
+  .note-words {
+    color: #333;
+  }
+
+  .guilloche {
+    display: none;
+  }
+
+  .schedule[open] summary {
+    display: none;
+  }
+
+  .schedule {
+    display: block !important;
+  }
+
+  .table-wrap {
+    overflow: visible;
+  }
+}

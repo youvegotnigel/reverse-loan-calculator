@@ -3,10 +3,305 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Work backwards from your salary to the maximum loan a Sri Lankan bank would lend you. Free, private, runs entirely in your browser."
+    />
+    <meta name="color-scheme" content="light dark" />
     <title>Reverse Loan Calculator — Sri Lanka</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script>
+      // Apply saved theme before first paint to avoid a flash.
+      const saved = localStorage.getItem('theme');
+      if (saved === 'dark' || saved === 'light') {
+        document.documentElement.dataset.theme = saved;
+      }
+    </script>
   </head>
   <body>
-    <div id="app"></div>
+    <header class="site-header">
+      <div class="brand">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="16" cy="16" r="15" fill="none" stroke="currentColor" stroke-width="1.5" />
+          <ellipse cx="16" cy="16" rx="11" ry="5" fill="none" stroke="currentColor" />
+          <ellipse
+            cx="16"
+            cy="16"
+            rx="11"
+            ry="5"
+            fill="none"
+            stroke="currentColor"
+            transform="rotate(60 16 16)"
+          />
+          <ellipse
+            cx="16"
+            cy="16"
+            rx="11"
+            ry="5"
+            fill="none"
+            stroke="currentColor"
+            transform="rotate(120 16 16)"
+          />
+        </svg>
+        <div class="brand-text">
+          <span class="brand-name">Reverse Loan Calculator</span>
+          <span class="brand-tag">Sri Lanka · LKR</span>
+        </div>
+      </div>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch color theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.5" fill="currentColor" />
+          <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <line x1="12" y1="2.5" x2="12" y2="5" />
+            <line x1="12" y1="19" x2="12" y2="21.5" />
+            <line x1="2.5" y1="12" x2="5" y2="12" />
+            <line x1="19" y1="12" x2="21.5" y2="12" />
+            <line x1="5.3" y1="5.3" x2="7" y2="7" />
+            <line x1="17" y1="17" x2="18.7" y2="18.7" />
+            <line x1="5.3" y1="18.7" x2="7" y2="17" />
+            <line x1="17" y1="7" x2="18.7" y2="5.3" />
+          </g>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z" fill="currentColor" />
+        </svg>
+      </button>
+    </header>
+
+    <main>
+      <section class="intro">
+        <h1>How much could you borrow?</h1>
+        <p>
+          Start from your salary and work the loan backwards — the same arithmetic a bank runs when
+          it decides your limit.
+        </p>
+      </section>
+
+      <div class="layout">
+        <form class="card inputs" aria-label="Loan inputs" autocomplete="off">
+          <div class="field">
+            <label for="salary">Monthly take-home salary</label>
+            <div class="money-input">
+              <span class="money-prefix" aria-hidden="true">Rs.</span>
+              <input
+                id="salary"
+                class="num"
+                type="text"
+                inputmode="numeric"
+                autocomplete="off"
+                enterkeyhint="done"
+                value="150,000"
+              />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="commitments">Existing monthly commitments</label>
+            <div class="money-input">
+              <span class="money-prefix" aria-hidden="true">Rs.</span>
+              <input
+                id="commitments"
+                class="num"
+                type="text"
+                inputmode="numeric"
+                autocomplete="off"
+                enterkeyhint="done"
+                value="0"
+              />
+            </div>
+            <p class="hint">Leasing, credit cards, other loan installments you already pay.</p>
+          </div>
+
+          <div class="field">
+            <div class="field-head">
+              <label for="dsr-number">Salary committed to repayment</label>
+              <div class="unit-input">
+                <input
+                  id="dsr-number"
+                  class="num"
+                  type="number"
+                  min="1"
+                  max="100"
+                  step="1"
+                  value="40"
+                />
+                <span aria-hidden="true">%</span>
+              </div>
+            </div>
+            <input
+              id="dsr-range"
+              type="range"
+              min="1"
+              max="100"
+              step="1"
+              value="40"
+              aria-label="Salary committed to repayment, percent"
+            />
+            <div class="chips" role="group" aria-label="Debt service ratio presets">
+              <button type="button" class="chip dsr-chip" data-dsr="40">40% · Conservative</button>
+              <button type="button" class="chip dsr-chip" data-dsr="50">50% · Typical</button>
+              <button type="button" class="chip dsr-chip" data-dsr="60">60% · Aggressive</button>
+            </div>
+            <p class="hint">
+              Sri Lankan banks typically cap total repayments around 40–60% of net income (DSR).
+            </p>
+          </div>
+
+          <fieldset class="field period">
+            <legend>Loan period</legend>
+            <div class="period-inputs">
+              <div class="unit-input wide">
+                <input
+                  id="years"
+                  class="num"
+                  type="number"
+                  min="0"
+                  max="40"
+                  step="1"
+                  value="10"
+                  aria-label="Years"
+                />
+                <span>years</span>
+              </div>
+              <div class="unit-input wide">
+                <input
+                  id="months"
+                  class="num"
+                  type="number"
+                  min="0"
+                  max="11"
+                  step="1"
+                  value="0"
+                  aria-label="Months"
+                />
+                <span>months</span>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="field">
+            <div class="field-head">
+              <label for="rate-number">Annual interest rate</label>
+              <div class="unit-input">
+                <input
+                  id="rate-number"
+                  class="num"
+                  type="number"
+                  min="0"
+                  max="36"
+                  step="0.05"
+                  value="11.5"
+                />
+                <span aria-hidden="true">%</span>
+              </div>
+            </div>
+            <input
+              id="rate-range"
+              type="range"
+              min="0"
+              max="36"
+              step="0.1"
+              value="11.5"
+              aria-label="Annual interest rate, percent"
+            />
+            <p class="hint">
+              Reducing balance. Most Sri Lankan loans float with AWPLR, so the rate can change over
+              the term.
+            </p>
+          </div>
+        </form>
+
+        <section class="results" aria-label="Results">
+          <div class="note-plate" id="note-plate">
+            <svg class="guilloche" id="guilloche" viewBox="0 0 400 400" aria-hidden="true"></svg>
+            <div class="note-body">
+              <p class="note-label">You could borrow up to</p>
+              <p class="note-figure num" id="max-loan">Rs. 0</p>
+              <p class="note-words" id="in-words"></p>
+              <p class="note-empty" id="empty-state" hidden></p>
+            </div>
+            <p class="microprint" aria-hidden="true"></p>
+            <div class="note-actions">
+              <button type="button" class="btn-ghost" id="copy-link">Copy link</button>
+              <button type="button" class="btn-ghost" id="copy-summary">Copy summary</button>
+            </div>
+          </div>
+
+          <div class="results-detail" aria-live="polite">
+            <p id="capacity-line" class="capacity-line" hidden></p>
+            <dl class="stats">
+              <div class="stat">
+                <dt>Monthly installment</dt>
+                <dd class="num" id="installment">—</dd>
+              </div>
+              <div class="stat">
+                <dt>Total repaid</dt>
+                <dd class="num" id="total-repaid">—</dd>
+              </div>
+              <div class="stat">
+                <dt>Total interest</dt>
+                <dd class="num" id="total-interest">—</dd>
+              </div>
+              <div class="stat">
+                <dt>Payments</dt>
+                <dd class="num" id="payments-count">—</dd>
+              </div>
+            </dl>
+
+            <div class="split" id="split" hidden>
+              <div class="split-bar" id="split-bar">
+                <span class="split-principal" id="split-principal-bar"></span>
+              </div>
+              <div class="split-legend">
+                <span class="legend-item legend-principal">
+                  Principal <strong class="num" id="split-principal-pct"></strong>
+                </span>
+                <span class="legend-item legend-interest">
+                  Interest <strong class="num" id="split-interest-pct"></strong>
+                </span>
+              </div>
+            </div>
+
+            <p class="stress-line" id="stress-line" hidden></p>
+
+            <figure class="chart-wrap" id="chart-wrap" hidden>
+              <figcaption>Remaining balance over the loan term</figcaption>
+              <svg id="balance-chart" viewBox="0 0 640 240" role="img"></svg>
+            </figure>
+
+            <details class="schedule" id="schedule" hidden>
+              <summary>Year-by-year breakdown</summary>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th scope="col">Year</th>
+                      <th scope="col">Principal paid</th>
+                      <th scope="col">Interest paid</th>
+                      <th scope="col">Remaining balance</th>
+                    </tr>
+                  </thead>
+                  <tbody id="schedule-body"></tbody>
+                </table>
+              </div>
+            </details>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <div class="sticky-result" id="sticky-result" hidden>
+      <span class="sticky-label">Max loan</span>
+      <strong class="num" id="sticky-figure">Rs. 0</strong>
+    </div>
+
+    <footer class="site-footer">
+      <p>
+        Estimates only — actual eligibility, rates and fees vary by bank. Everything runs in your
+        browser; nothing you enter is sent anywhere.
+      </p>
+    </footer>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
