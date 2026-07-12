@@ -15,6 +15,7 @@ import { renderGuilloche } from './ui/guilloche';
 import { bindInputs } from './ui/inputs';
 import { initStickyResult, renderResults } from './ui/results';
 import { renderScheduleTable } from './ui/schedule-table';
+import { initShare } from './ui/share';
 import { initTheme } from './ui/theme';
 
 const guilloche = document.querySelector<SVGElement>('#guilloche');
@@ -37,6 +38,7 @@ if (themeToggle) {
 }
 
 initStickyResult();
+initShare(store);
 
 const chartWrap = document.querySelector<HTMLElement>('#chart-wrap');
 const chartSvg = document.querySelector<SVGSVGElement>('#balance-chart');
