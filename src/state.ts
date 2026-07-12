@@ -1,15 +1,15 @@
-import { type LoanInputs } from './engine/loan';
+import { type AppInputs } from './engine/property';
 import { statusFor, type InputStatus } from './engine/validate';
 
-export type Listener = (inputs: LoanInputs, status: InputStatus) => void;
+export type Listener = (inputs: AppInputs, status: InputStatus) => void;
 
 export interface Store {
-  get(): LoanInputs;
-  set(patch: Partial<LoanInputs>): void;
+  get(): AppInputs;
+  set(patch: Partial<AppInputs>): void;
   subscribe(fn: Listener): void;
 }
 
-export function initState(initial: LoanInputs): Store {
+export function initState(initial: AppInputs): Store {
   let inputs = { ...initial };
   const listeners: Listener[] = [];
 

@@ -1,5 +1,6 @@
 import { amountInWords, formatLKR, formatPercent } from '../engine/format';
-import { stressTest, type LoanInputs, type LoanResult } from '../engine/loan';
+import { stressTest, type LoanResult } from '../engine/loan';
+import { propertyAffordability, type AppInputs } from '../engine/property';
 import { LIMITS, type InputStatus } from '../engine/validate';
 
 const STRESS_BUMP = 2;
@@ -45,7 +46,7 @@ function animateFigure(el: HTMLElement, to: number): void {
   raf = requestAnimationFrame(tick);
 }
 
-export function renderResults(inputs: LoanInputs, status: InputStatus, result: LoanResult): void {
+export function renderResults(inputs: AppInputs, status: InputStatus, result: LoanResult): void {
   const plate = byId<HTMLDivElement>('note-plate');
   const figure = byId<HTMLElement>('max-loan');
   const words = byId<HTMLElement>('in-words');
@@ -56,6 +57,7 @@ export function renderResults(inputs: LoanInputs, status: InputStatus, result: L
     totalInterest: byId<HTMLElement>('total-interest'),
     payments: byId<HTMLElement>('payments-count'),
   };
+  const propertyLine = byId<HTMLElement>('property-line');
   const capacityLine = byId<HTMLElement>('capacity-line');
   const split = byId<HTMLElement>('split');
   const splitBar = byId<HTMLElement>('split-bar');
@@ -71,6 +73,7 @@ export function renderResults(inputs: LoanInputs, status: InputStatus, result: L
     empty.textContent = EMPTY_MESSAGES[status];
     shownValue = null;
     for (const el of Object.values(stats)) el.textContent = '—';
+    propertyLine.hidden = true;
     capacityLine.hidden = true;
     split.hidden = true;
     stressLine.hidden = true;
@@ -89,6 +92,18 @@ export function renderResults(inputs: LoanInputs, status: InputStatus, result: L
   stats.totalRepaid.textContent = formatLKR(result.totalRepaid);
   stats.totalInterest.textContent = formatLKR(result.totalInterest);
   stats.payments.textContent = `${result.totalPayments} months`;
+
+  if (inputs.propertyMode && result.maxLoan > 0) {
+    const property = propertyAffordability(result.maxLoan, inputs.downPaymentPercent);
+    propertyLine.hidden = false;
+    propertyLine.innerHTML =
+      `🏠 You could afford a property worth ` +
+      `<strong class="num">${formatLKR(property.maxPropertyPrice)}</strong> — ` +
+      `${formatLKR(property.downPaymentAmount)} down (${formatPercent(inputs.downPaymentPercent)}) ` +
+      `plus the ${formatLKR(result.maxLoan)} loan.`;
+  } else {
+    propertyLine.hidden = true;
+  }
 
   if (inputs.existingCommitments > 0) {
     const gross = inputs.monthlySalary * (inputs.dsrPercent / 100);

@@ -209,6 +209,43 @@
               the term.
             </p>
           </div>
+
+          <div class="field">
+            <button type="button" class="prop-toggle" id="property-toggle" aria-pressed="false">
+              <span class="prop-toggle-track" aria-hidden="true"></span>
+              Buying a property?
+            </button>
+            <div class="field" id="down-payment-field" hidden>
+              <div class="field-head">
+                <label for="dp-number">Down payment</label>
+                <div class="unit-input">
+                  <input
+                    id="dp-number"
+                    class="num"
+                    type="number"
+                    min="0"
+                    max="90"
+                    step="1"
+                    value="20"
+                  />
+                  <span aria-hidden="true">%</span>
+                </div>
+              </div>
+              <input
+                id="dp-range"
+                type="range"
+                min="0"
+                max="90"
+                step="1"
+                value="20"
+                aria-label="Down payment, percent of property price"
+              />
+              <p class="hint">
+                Sri Lankan banks typically finance 70–90% of the property value (LTV); your down
+                payment covers the rest.
+              </p>
+            </div>
+          </div>
         </form>
 
         <section class="results" aria-label="Results">
@@ -228,6 +265,7 @@
           </div>
 
           <div class="results-detail" aria-live="polite">
+            <p id="property-line" class="property-line" hidden></p>
             <p id="capacity-line" class="capacity-line" hidden></p>
             <dl class="stats">
               <div class="stat">

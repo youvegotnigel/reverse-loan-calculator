@@ -1,5 +1,6 @@
 import { amountInWords, formatLKR, formatPercent } from '../engine/format';
 import { computeLoan } from '../engine/loan';
+import { propertyAffordability } from '../engine/property';
 import { statusFor } from '../engine/validate';
 import { type Store } from '../state';
 
@@ -37,9 +38,15 @@ function buildSummary(store: Store): string {
     `Maximum loan: ${formatLKR(result.maxLoan)} (${amountInWords(result.maxLoan)})`,
     `Monthly installment: ${formatLKR(result.monthlyInstallment)}`,
     `Total repaid: ${formatLKR(result.totalRepaid)} · Total interest: ${formatLKR(result.totalInterest)}`,
-    '',
-    window.location.href,
   ];
+  if (inputs.propertyMode && result.maxLoan > 0) {
+    const property = propertyAffordability(result.maxLoan, inputs.downPaymentPercent);
+    lines.push(
+      `Max property price: ${formatLKR(property.maxPropertyPrice)} ` +
+        `(${formatPercent(inputs.downPaymentPercent)} down = ${formatLKR(property.downPaymentAmount)})`,
+    );
+  }
+  lines.push('', window.location.href);
   return lines.join('\n');
 }
 

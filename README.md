@@ -27,6 +27,9 @@ leaves your machine.
   years + months, annual interest rate (reducing balance, slider ⇄ number)
 - **Results:** monthly installment, total repaid, total interest, number of payments,
   principal-vs-interest split bar with percentages
+- **Property purchase mode (LTV)** — flip "Buying a property?", set your down payment %,
+  and see the maximum property price you could afford (price = loan ÷ (1 − down%));
+  hints reflect typical Sri Lankan LTV caps of 70–90%
 - **Rate stress test** — shows what a 2% rate rise does to your maximum, since most
   Sri Lankan loans float with AWPLR
 - **Balance decay chart** — SVG area chart of the remaining balance, with hover tooltip
@@ -101,7 +104,6 @@ Tracked here so they don't get lost:
 
 | Feature                             | Sketch                                                    | Effort |
 | ----------------------------------- | --------------------------------------------------------- | ------ |
-| Max property price mode (LTV)       | Down-payment % → max property price alongside max loan    | M      |
 | Bank/rate comparison                | Three rate columns showing max loan under each            | M      |
 | PWA / offline support               | Manifest + service worker; the app is fully static        | M      |
 | English / Sinhala / Tamil           | Language toggle with self-hosted Noto Sinhala/Tamil fonts | L      |

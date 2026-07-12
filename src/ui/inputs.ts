@@ -1,4 +1,4 @@
-import { type LoanInputs } from '../engine/loan';
+import { type AppInputs } from '../engine/property';
 import { clampField, type LimitField } from '../engine/validate';
 import { type Store } from '../state';
 
@@ -40,7 +40,7 @@ function bindMoney(
 function bindPair(
   range: HTMLInputElement,
   number: HTMLInputElement,
-  field: 'dsrPercent' | 'annualRatePercent',
+  field: 'dsrPercent' | 'annualRatePercent' | 'downPaymentPercent',
   limit: LimitField,
   store: Store,
 ): void {
@@ -97,14 +97,26 @@ export function bindInputs(store: Store): void {
   const months = byId<HTMLInputElement>('months');
   const rateRange = byId<HTMLInputElement>('rate-range');
   const rateNumber = byId<HTMLInputElement>('rate-number');
+  const propertyToggle = byId<HTMLButtonElement>('property-toggle');
+  const downPaymentField = byId<HTMLElement>('down-payment-field');
+  const dpRange = byId<HTMLInputElement>('dp-range');
+  const dpNumber = byId<HTMLInputElement>('dp-number');
   const chips = Array.from(document.querySelectorAll<HTMLButtonElement>('.dsr-chip'));
 
   bindMoney(salary, 'monthlySalary', 'salary', store);
   bindMoney(commitments, 'existingCommitments', 'commitments', store);
   bindPair(dsrRange, dsrNumber, 'dsrPercent', 'dsr', store);
   bindPair(rateRange, rateNumber, 'annualRatePercent', 'rate', store);
+  bindPair(dpRange, dpNumber, 'downPaymentPercent', 'downPayment', store);
   bindCount(years, 'years', 'years', store);
   bindCount(months, 'months', 'months', store);
+
+  propertyToggle.addEventListener('click', () => {
+    const next = !store.get().propertyMode;
+    propertyToggle.setAttribute('aria-pressed', String(next));
+    downPaymentField.hidden = !next;
+    store.set({ propertyMode: next });
+  });
 
   for (const chip of chips) {
     chip.addEventListener('click', () => {
@@ -115,7 +127,12 @@ export function bindInputs(store: Store): void {
   }
 
   /** Push state into controls (used at init and for chip presses). */
-  function syncControls(inputs: LoanInputs): void {
+  function syncControls(inputs: AppInputs): void {
+    propertyToggle.setAttribute('aria-pressed', String(inputs.propertyMode));
+    downPaymentField.hidden = !inputs.propertyMode;
+    if (dpNumber !== document.activeElement) dpNumber.value = String(inputs.downPaymentPercent);
+    dpRange.value = String(inputs.downPaymentPercent);
+    setFill(dpRange);
     const active = document.activeElement;
     if (salary !== active) salary.value = grouping.format(inputs.monthlySalary);
     if (commitments !== active) commitments.value = grouping.format(inputs.existingCommitments);

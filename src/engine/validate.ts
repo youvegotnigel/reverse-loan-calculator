@@ -1,4 +1,5 @@
 import { monthlyCapacity, totalMonths, type LoanInputs } from './loan';
+import { MAX_DOWN_PAYMENT_PERCENT, type AppInputs } from './property';
 
 export const LIMITS = {
   salary: { min: 0, max: 10_000_000 },
@@ -7,6 +8,7 @@ export const LIMITS = {
   years: { min: 0, max: 40 },
   months: { min: 0, max: 11 },
   rate: { min: 0, max: 36 },
+  downPayment: { min: 0, max: MAX_DOWN_PAYMENT_PERCENT },
 } as const;
 
 export type LimitField = keyof typeof LIMITS;
@@ -18,6 +20,12 @@ export const DEFAULT_INPUTS: LoanInputs = {
   years: 10,
   months: 0,
   annualRatePercent: 11.5,
+};
+
+export const DEFAULT_APP_INPUTS: AppInputs = {
+  ...DEFAULT_INPUTS,
+  propertyMode: false,
+  downPaymentPercent: 20,
 };
 
 export function clampField(field: LimitField, value: number): number {

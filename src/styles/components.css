@@ -773,3 +773,69 @@ input[type='range']:focus-visible::-moz-range-thumb {
   background: var(--surface-0);
   z-index: 1;
 }
+
+/* Property purchase (LTV) mode */
+
+.prop-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  cursor: pointer;
+}
+
+.prop-toggle:hover {
+  color: var(--ceylon-700);
+}
+
+.prop-toggle-track {
+  position: relative;
+  width: 38px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--line-200);
+  transition: background-color 150ms ease;
+  flex-shrink: 0;
+}
+
+.prop-toggle-track::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--surface-0);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.3);
+  transition: transform 150ms ease;
+}
+
+.prop-toggle[aria-pressed='true'] .prop-toggle-track {
+  background: var(--ceylon-700);
+}
+
+.prop-toggle[aria-pressed='true'] .prop-toggle-track::after {
+  transform: translateX(16px);
+}
+
+#down-payment-field {
+  margin-top: var(--space-3);
+}
+
+.property-line {
+  font-size: 0.9375rem;
+  color: var(--ink-900);
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface-0);
+  border: 1px solid var(--line-200);
+  border-left: 3px solid var(--saffron-500);
+  border-radius: var(--radius-s);
+}
