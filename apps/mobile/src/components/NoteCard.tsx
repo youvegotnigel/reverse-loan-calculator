@@ -54,9 +54,13 @@ export function NoteCard(props: {
             )}
 
             <View style={s.metaRow}>
-              <Meta label="Installment" value={`${formatLKR(result.monthlyInstallment)}/mo`} />
-              <Meta label="Term" value={props.termLabel} />
-              <Meta label="Rate" value={formatPercent(props.ratePercent)} />
+              <Meta
+                flex={1.5}
+                label="Installment"
+                value={`${formatLKR(result.monthlyInstallment)}/mo`}
+              />
+              <Meta flex={0.9} label="Term" value={props.termLabel} />
+              <Meta flex={0.7} label="Rate" value={formatPercent(props.ratePercent)} />
             </View>
           </>
         )}
@@ -65,11 +69,15 @@ export function NoteCard(props: {
   );
 }
 
-function Meta(props: { label: string; value: string }) {
+function Meta(props: { label: string; value: string; flex: number }) {
   return (
-    <View style={{ flex: 1 }}>
-      <Text style={s.metaLabel}>{props.label}</Text>
-      <Text style={s.metaValue}>{props.value}</Text>
+    <View style={{ flex: props.flex }}>
+      <Text style={s.metaLabel} numberOfLines={1}>
+        {props.label}
+      </Text>
+      <Text style={s.metaValue} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.7}>
+        {props.value}
+      </Text>
     </View>
   );
 }
@@ -125,6 +133,7 @@ const s = StyleSheet.create({
   },
   metaRow: {
     flexDirection: 'row',
+    gap: 10,
     marginTop: 14,
     paddingTop: 12,
     borderTopWidth: StyleSheet.hairlineWidth,
