@@ -7,6 +7,11 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "backgroundColor": "#0A2E2C",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0A2E2C"
+    },
     "ios": {
       "bundleIdentifier": "lk.youvegotnigel.reverseloan",
       "supportsTablet": true,
