@@ -85,7 +85,7 @@ export function renderResults(inputs: LoanInputs, status: InputStatus, result: L
   words.textContent = amountInWords(result.maxLoan);
   sticky.textContent = formatLKR(result.maxLoan);
 
-  stats.installment.textContent = formatLKR(result.monthlyInstallment) + ' / month';
+  stats.installment.textContent = formatLKR(result.monthlyInstallment);
   stats.totalRepaid.textContent = formatLKR(result.totalRepaid);
   stats.totalInterest.textContent = formatLKR(result.totalInterest);
   stats.payments.textContent = `${result.totalPayments} months`;

@@ -118,6 +118,12 @@ main {
   align-items: start;
 }
 
+/* Grid items must be allowed to shrink below their content width,
+   or the nowrap microprint blows the column out. */
+.layout > * {
+  min-width: 0;
+}
+
 @media (max-width: 860px) {
   .layout {
     grid-template-columns: 1fr;
@@ -519,7 +525,7 @@ input[type='range']:focus-visible::-moz-range-thumb {
 
 .stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-3);
 }
 
